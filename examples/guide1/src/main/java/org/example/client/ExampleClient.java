@@ -92,8 +92,8 @@ public class ExampleClient implements EventListener<Request, Answer> {
   private static final String realmName = "exchange.example.org";
   // definition of codes, IDs
   private static final int commandCode = 686;
-  private static final long vendorID = 66666;
-  private static final long applicationID = 33333;
+  private static final long vendorID = 0;
+  private static final long applicationID = 333333;
   private ApplicationId authAppId = ApplicationId.createByAuthAppId(applicationID);
   private static final int exchangeTypeCode = 888;
   private static final int exchangeDataCode = 999;
@@ -238,7 +238,7 @@ public class ExampleClient implements EventListener<Request, Answer> {
   }
 
   private void sendNextRequest(int enumType) throws InternalException, IllegalDiameterStateException, RouteException, OverloadException {
-    Request r = this.session.createRequest(commandCode, this.authAppId, realmName, serverURI);
+    Request r = this.session.createRequest(commandCode, this.authAppId, realmName, "proxy1");
     // here we have all except our custom avps
 
     AvpSet requestAvps = r.getAvps();
@@ -266,8 +266,12 @@ public class ExampleClient implements EventListener<Request, Answer> {
    * @see org.jdiameter.api.EventListener#receivedSuccessMessage(org.jdiameter
    * .api.Message, org.jdiameter.api.Message)
    */
+
+  private int count=0;
+
   @Override
   public void receivedSuccessMessage(Request request, Answer answer) {
+    System.out.println("++++++++++++++++++++  receiveSucessMessage ::: " + count++);
     dumpMessage(answer,false);
     if (answer.getCommandCode() != commandCode) {
       log.error("Received bad answer: " + answer.getCommandCode());

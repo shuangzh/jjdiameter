@@ -137,7 +137,6 @@ public class ChargingServerSimulator extends CCASessionFactoryImpl implements Ne
     }
   }
 
-  @Override
   public Answer processRequest(Request request) {
     if (logger.isInfoEnabled()) {
       logger.info("<< Received Request [" + request + "]");
@@ -154,7 +153,7 @@ public class ChargingServerSimulator extends CCASessionFactoryImpl implements Ne
     return null;
   }
 
-  @Override
+
   public void receivedSuccessMessage(Request request, Answer answer) {
     if (logger.isInfoEnabled()) {
       logger.info("<< Received Success Message for Request [" + request + "] and Answer [" + answer + "]");

@@ -76,8 +76,8 @@ private static void configLog4j() {
   private static final String realmName = "exchange.example.org";
   // Defs for our app
   private static final int commandCode = 686;
-  private static final long vendorID = 66666;
-  private static final long applicationID = 33333;
+  private static final long vendorID = 0;
+  private static final long applicationID = 333333;
   private ApplicationId authAppId = ApplicationId.createByAuthAppId(applicationID);;
   private static final int exchangeTypeCode = 888;
   private static final int exchangeDataCode = 999;
@@ -259,8 +259,12 @@ private static void configLog4j() {
    * org.jdiameter.api.NetworkReqListener#processRequest(org.jdiameter.api
    * .Request)
    */
+
+  private int count;
+
   @Override
   public Answer processRequest(Request request) {
+    System.out.println("++++++++++++  receive Rquest :::: " + count++);
     dumpMessage(request,false);
     if (request.getCommandCode() != commandCode) {
       log.error("Received bad answer: " + request.getCommandCode());
@@ -362,9 +366,11 @@ private static void configLog4j() {
     } catch (AvpDataException e) {
       // thrown when interpretation of byte[] fails
       e.printStackTrace();
+
     } catch (InternalException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+
     }
     //error, something bad happened.
     finished = true;

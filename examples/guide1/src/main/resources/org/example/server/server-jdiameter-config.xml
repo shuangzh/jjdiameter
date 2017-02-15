@@ -2,29 +2,32 @@
 <Configuration xmlns="http://www.jdiameter.org/jdiameter-server">
 
   <LocalPeer>
-    <URI value="aaa://127.0.0.1:3868" />
 
-    <IPAddresses>
-      <IPAddress value="127.0.0.1" />
-    </IPAddresses>
-    <Realm value="exchange.example.org" />
-    <VendorID value="0" />
-    <ProductName value="jDiameter" />
-    <FirmwareRevision value="1" />
-    <OverloadMonitor>
-      <Entry index="1" lowThreshold="0.5" highThreshold="0.6">
-        <ApplicationID>
-          <VendorId value="0" />
-          <AuthApplId value="333333" />
-          <AcctApplId value="0" />
-        </ApplicationID>
-      </Entry>
-    </OverloadMonitor>
+    <URI value="aaa://server1:4868" />
+    <!--
+   <URI value="ser1.com" />
+    -->
+   <IPAddresses>
+     <IPAddress value="192.168.0.3"  />
+   </IPAddresses>
+   <Realm value="exchange.example.org" />
+   <VendorID value="0" />
+   <ProductName value="jDiameter" />
+   <FirmwareRevision value="1" />
+   <OverloadMonitor>
+     <Entry index="1" lowThreshold="0.5" highThreshold="0.6">
+       <ApplicationID>
+         <VendorId value="0" />
+         <AuthApplId value="333333" />
+         <AcctApplId value="0" />
+       </ApplicationID>
+     </Entry>
+   </OverloadMonitor>
 
-  </LocalPeer>
+ </LocalPeer>
 
-  <Parameters>
-    <!-- set to true, we can safely remove client def in this case -->
+ <Parameters>
+   <!-- set to true, we can safely remove client def in this case -->
     <AcceptUndefinedPeer value="true" />
     <DuplicateProtection value="true" />
     <DuplicateTimer value="240000" />
@@ -52,10 +55,15 @@
   <Network>
     <Peers>
       <!-- our client, lets define it -->
-      <Peer name="aaa://127.0.0.1:1812" attempt_connect="false" rating="1" />
+
+      <Peer name="aaa://192.168.0.3:1812" attempt_connect="false" rating="1" />
+        <!--
+     <Peer name="ser1.com" ip="192.168.0.3" attempt_connect="true" rating="1" />
+        -->
+
     </Peers>
     <Realms>
-      <Realm name="exchange.example.org" peers="127.0.0.1" local_action="LOCAL" dynamic="false" exp_time="1">
+      <Realm name="exchange.example.org" peers="192.168.0.3" local_action="LOCAL" dynamic="false" exp_time="1">
         <ApplicationID>
           <VendorId value="0" />
           <AuthApplId value="333333" />

@@ -2,10 +2,10 @@
 <Configuration xmlns="http://www.jdiameter.org/jdiameter-server">
 
   <LocalPeer>
-    <URI value="aaa://127.0.0.1:1812" />
+    <URI value="aaa://client:1812" />
 
     <IPAddresses>
-      <IPAddress value="127.0.0.1" />
+      <IPAddress value="192.168.0.3" />
     </IPAddresses>
     <Realm value="exchange.example.org" />
     <VendorID value="0" />
@@ -49,10 +49,16 @@
 
   <Network>
     <Peers>
-      <Peer name="aaa://127.0.0.1:3868" attempt_connect="true" rating="1" />
+      <!--
+      <Peer name="aaa://192.168.0.3:3868" attempt_connect="false" rating="1" />
+       -->
+
+      <Peer name="aaa://proxy1:5868" attempt_connect="true" rating="1" />
+
+
     </Peers>
     <Realms>
-      <Realm name="exchange.example.org" peers="127.0.0.1"
+      <Realm name="exchange.example.org" peers="proxy1"
         local_action="LOCAL" dynamic="false" exp_time="1">
         <ApplicationID>
           <VendorId value="0" />

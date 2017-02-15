@@ -39,6 +39,9 @@
   <vendor vendor-id="ETSI" code="13019" name="ETSI" />
   <vendor vendor-id="CableLabs" code="4491" name="Cable Labs" />
 
+
+
+
   <avpdefn name="User-Name" code="1" mandatory="must" protected="may" may-encrypt="yes" vendor-bit="mustnot" >
     <type type-name="UTF8String" />
   </avpdefn>

@@ -5,20 +5,23 @@
   <parent>
     <groupId>org.mobicents.diameter</groupId>
     <artifactId>diameter-parent</artifactId>
-    <version>1.7.0-SNAPSHOT</version>
+    <version>1.7.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <packaging>pom</packaging>
 
   <artifactId>diameter-core-parent</artifactId>
+  <version>1.7.0</version>
 
   <name>Restcomm :: Diameter Core :: ${project.artifactId}</name>
 
   <modules>
     <module>jdiameter</module>
+
     <module>jdiameter-ha</module>
     <module>mux</module>
+ujn
   </modules>
 
   <properties>
@@ -29,6 +32,7 @@
 
   <build>
     <plugins>
+      <!--
       <plugin>
         <artifactId>maven-eclipse-plugin</artifactId>
         <groupId>org.mobicents.tools</groupId>
@@ -39,6 +43,7 @@
           <generateProjectsForModules>false</generateProjectsForModules>
         </configuration>
       </plugin>
+      -->
     </plugins>
   </build>
 

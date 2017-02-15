@@ -17,8 +17,8 @@
 
   <properties>
     <!-- Mobicents Diameter Components Versions -->
-    <restcomm.diameter.jdiameter.version>1.7.0-SNAPSHOT</restcomm.diameter.jdiameter.version>
-    <restcomm.diameter.mux.version>1.7.0-SNAPSHOT</restcomm.diameter.mux.version>
+    <restcomm.diameter.jdiameter.version>1.7.0</restcomm.diameter.jdiameter.version>
+    <restcomm.diameter.mux.version>1.7.0</restcomm.diameter.mux.version>
     <!-- Thirdparty Dependencies Versions -->
     <slf4j.version>1.5.8</slf4j.version>
     <jbosscache.version>3.2.5.GA</jbosscache.version>
@@ -184,7 +184,10 @@
     <repository>
       <id>jboss-public-repository-group</id>
       <name>JBoss Public Maven Repository Group</name>
+      <url>http://119.29.105.54:7081/nexus/content/repositories/jboss2/</url>
+      <!--
       <url>https://repository.jboss.org/nexus/content/groups/public</url>
+      -->
       <layout>default</layout>
       <releases>
         <enabled>true</enabled>

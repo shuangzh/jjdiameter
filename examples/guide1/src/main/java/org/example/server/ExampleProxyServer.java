@@ -3,6 +3,7 @@ package org.example.server;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.jdiameter.api.*;
+import org.jdiameter.client.api.IMessage;
 import org.jdiameter.server.impl.StackImpl;
 import org.jdiameter.server.impl.helpers.XMLConfiguration;
 import org.mobicents.diameter.dictionary.AvpDictionary;
@@ -17,7 +18,7 @@ import java.util.Set;
 /**
  * Created by admin on 2017/2/14.
  */
-public class ExampleProxyServer implements NetworkReqListener {
+public class ExampleProxyServer implements NetworkReqListener, EventListener<Request, Answer> {
 
     private static final Logger log = Logger.getLogger(ExampleServer.class);
     static{
@@ -230,10 +231,46 @@ public class ExampleProxyServer implements NetworkReqListener {
 
     private int count;
 
+
+    public long hopid;
+
     @Override
     public Answer processRequest(Request request) {
         System.out.println("++++++++++++  receive Rquest :::: " + count++);
         dumpMessage(request,false);
+
+
+        // 代理方法
+
+
+        try {
+            Session session = factory.getNewSession(request.getSessionId());
+            System.out.println("++++++  session id :" + session.getSessionId());
+            System.out.println("++++++  HopByHopIdentifier:" + request.getHopByHopIdentifier());
+
+            this.hopid = request.getHopByHopIdentifier();
+
+            AvpSet avpSet = request.getAvps();
+            Avp realmAvp = avpSet.getAvp(Avp.DESTINATION_REALM);
+            String realm= realmAvp.getDiameterIdentity();
+            Avp hostAvp = avpSet.getAvp(Avp.DESTINATION_HOST);
+            String host = hostAvp.getDiameterIdentity();
+            System.out.println("+++++  realm:" + realm);
+            System.out.println("+++++  host :" + host);
+            avpSet.removeAvp(Avp.DESTINATION_HOST);
+            avpSet.insertAvp(0,Avp.DESTINATION_HOST,"server1",true, false, false);
+
+            session.send(request, this);
+            return  null;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        //
+
         if (request.getCommandCode() != commandCode) {
             log.error("Received bad answer: " + request.getCommandCode());
             return null;
@@ -370,5 +407,45 @@ public class ExampleProxyServer implements NetworkReqListener {
     }
 
 
+    @Override
+    public void receivedSuccessMessage(Request request, Answer answer) {
 
+        System.out.println("++++++@@@@@  HopByHopIdentifier:" + answer.getHopByHopIdentifier());
+        System.out.println("++++++@@@@@  HopByHopIdentifier:" + request.getHopByHopIdentifier());
+        AvpSet avpSet = request.getAvps();
+        Avp realmAvp = avpSet.getAvp(Avp.DESTINATION_REALM);
+        String realm= null;
+        try {
+
+            realm = realmAvp.getDiameterIdentity();
+            Avp hostAvp = avpSet.getAvp(Avp.DESTINATION_HOST);
+            String host = hostAvp.getDiameterIdentity();
+            System.out.println("+++++@@@  realm:" + realm);
+            System.out.println("+++++@@@  host :" + host);
+
+            ((IMessage)answer).setHopByHopIdentifier(hopid);
+
+            Session session1= factory.getNewSession(answer.getSessionId());
+            session1.send(answer);
+
+
+
+        } catch (AvpDataException e) {
+            e.printStackTrace();
+        } catch (IllegalDiameterStateException e) {
+            e.printStackTrace();
+        } catch (RouteException e) {
+            e.printStackTrace();
+        } catch (InternalException e) {
+            e.printStackTrace();
+        } catch (OverloadException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void timeoutExpired(Request request) {
+
+    }
 }

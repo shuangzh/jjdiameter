@@ -6,7 +6,7 @@
    <URI value="aaa://proxy1:5868" />
 
     <IPAddresses>
-      <IPAddress value="192.168.0.3"  />
+      <IPAddress value="192.168.0.113"  />
     </IPAddresses>
     <Realm value="exchange.example.org" />
     <VendorID value="0" />
@@ -58,10 +58,9 @@
         -->
     <Peer name="aaa://server1:4868" attempt_connect="true" rating="1" />
 
-
     </Peers>
     <Realms>
-      <Realm name="exchange.example.org" peers="server1" local_action="PROXY" dynamic="false" exp_time="1">
+      <Realm name="exchange.example.org" peers="server1" local_action="LOCAL" dynamic="false" exp_time="1">
         <ApplicationID>
           <VendorId value="0" />
           <AuthApplId value="333333" />
